@@ -18,12 +18,23 @@ const cotizar = reactive({
   criptomoneda: "",
 });
 
+const cotizacion = ref({});
+
 onMounted(() => {
   const url = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=20&tsym=USD";
   fetch(url)
     .then((respuesta) => respuesta.json())
     .then(({ Data }) => (criptomonedas.value = Data));
 });
+
+const obtenerCotizacion = async () => {
+  const { moneda, criptomoneda } = cotizar;
+  const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+
+  const respuesta = await fetch(url);
+  const data = await respuesta.json();
+  cotizacion.value = data.DISPLAY[criptomoneda][moneda];
+};
 
 const cotizarCripto = () => {
   // Validar campos
@@ -33,6 +44,7 @@ const cotizarCripto = () => {
   }
 
   error.value = "";
+  obtenerCotizacion();
 };
 </script>
 
