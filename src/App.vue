@@ -67,3 +67,25 @@ const cotizarCripto = () => {
     </div>
   </div>
 </template>
+
+<style>
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #18223d;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #87caf3;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #6ca2c4;
+}
+</style>
