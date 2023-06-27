@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 
 import Alerta from "./components/Alerta.vue";
 
@@ -46,6 +46,10 @@ const cotizarCripto = () => {
   error.value = "";
   obtenerCotizacion();
 };
+
+const mostrarResultado = computed(() => {
+  return Object.values(cotizacion.value).length > 0;
+});
 </script>
 
 <template>
@@ -78,6 +82,30 @@ const cotizarCripto = () => {
 
           <input type="submit" value="Cotizar" />
         </form>
+
+        <div class="contenedor-resultado" v-if="mostrarResultado">
+          <h2>Cotización:</h2>
+          <div class="resultado">
+            <img :src="'https://cryptocompare.com/' + cotizacion.IMAGEURL" alt="imagen cripto" />
+            <div>
+              <p>
+                El precio es de: <span>{{ cotizacion.PRICE }}</span>
+              </p>
+              <p>
+                Precio más alto del día: <span>{{ cotizacion.HIGHDAY }}</span>
+              </p>
+              <p>
+                Precio más bajo del día: <span>{{ cotizacion.LOWDAY }}</span>
+              </p>
+              <p>
+                Variación últimas 24 hrs: <span>{{ cotizacion.CHANGEPCT24HOUR }}%</span>
+              </p>
+              <p>
+                Última actualización: <span>{{ cotizacion.LASTUPDATE }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
